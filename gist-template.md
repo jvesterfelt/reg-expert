@@ -8,6 +8,8 @@ In this tutorial we will be using a common regular expression (regex) that is us
 
 "/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/"
 
+First, let's discuss the different features of regular expressions.
+
 ## Table of Contents
 
 - [Anchors](#anchors)
@@ -63,16 +65,29 @@ Character classes are used to match more general classes of characters. These ar
 "." will match any individual character. This is similar to the "*" character, in that it will match *any* single character. It's important to be conscious of how wildcards such as "." or "*" are used in an expression since they are slower and less precise that using character classes. 
 
 ### Flags "m", "i", "g"
+Generally a regular expression will be contained within two forward slash characters "/*expression*/." Flags add another layer of functionality by allowing to specify how to handle the data being passed. 
 
-### Grouping and Capturing
+"g", or "global", indicates how a search is performed. When it's used the expression will search not from the beginning of the dataset/string, but will begin from where the last search ended.
 
-### Bracket Expressions
+"i", or "insensitive", indicates that you want to treat the entire expression with case-insensitivity. This helps to reduce the clutter when specifying letter characters. For example, both "[a-zA-Z]" and "/[a-z]/i" accomplish the same thing--search for any single letter whether lower or uppercase.
+
+"m", or "multi-line", indicates that the entire expression should be treated as individual lines. The expression "^This is a line$" would be interpreted as a separate line for every word in the string. This changes the behavior of using the "^" and "$" in this expression. They now behave the same way as if they were used independently; matching on "This" for the "^", and matching only on "line" for the "$."
+
+### Grouping and Capturing "()"
+As previously discussed, regular expressions allow for accessing the matching values when they are *captured*. By placing the series being searched within parentheses functions are able to access the values being returned. This allows for the matching values to be assigned to variables, and used programmatically. 
+
+### Bracket Expressions "[]"
+Square brackets define an individual set of criteria to be matched, and allow for building an expression that searches for multiple different sets of expressions. An expression such as "[a-d]|[t-z]" would match on either any single lowercase character between a-d, *OR* match on any single lowercase character between t-z. Similarly, an expression such as "[a-zA-Z]" will search for any single letter regardless of capitalization.
 
 ### Greedy and Lazy Match
+The previously discussed quantifiers are examples of "greedy operators," since they will expand the search as far as they are allowed by the parameters provided. Conversely, using the "<>" symbols in a search will limit the search to just the parameters inside, making it a lazy search. Neither method is necessarily "wrong" or "right," but are both powerful when used with focused intent in a search.
 
-### Boundaries
+### Boundaries "\b", "\B"
+Boundaries are similar to the anchors discussed previously--they mark the boundaries of the search. "\b" will search for any whole word: "With this phrase" and expression "\bthis\b would match on the only the word "this" by itself. If the word were crammed in a stream of characters "adoifen*this*adiaoe" then it would not match. Just as "\b" will match only an individual word, it's "negation"--"\B"--will match only if the set is surrounded by whole words. 
 
-### Back-references
+### Back-references "\1", "\2", "\3", etc.
+
+
 
 ### Look-ahead and Look-behind
 
