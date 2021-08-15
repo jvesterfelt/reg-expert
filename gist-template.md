@@ -83,13 +83,15 @@ Square brackets define an individual set of criteria to be matched, and allow fo
 The previously discussed quantifiers are examples of "greedy operators," since they will expand the search as far as they are allowed by the parameters provided. Conversely, using the "<>" symbols in a search will limit the search to just the parameters inside, making it a lazy search. Neither method is necessarily "wrong" or "right," but are both powerful when used with focused intent in a search.
 
 ### Boundaries "\b", "\B"
-Boundaries are similar to the anchors discussed previously--they mark the boundaries of the search. "\b" will search for any whole word: "With this phrase" and expression "\bthis\b would match on the only the word "this" by itself. If the word were crammed in a stream of characters "adoifen*this*adiaoe" then it would not match. Just as "\b" will match only an individual word, it's "negation"--"\B"--will match only if the set is surrounded by whole words. 
+Boundaries are similar to the anchors discussed previously--they mark the boundaries defined by the terms of the search. "\b" will search for any whole word: "With this phrase" and expression "\bthis\b would match on the only the word "this" by itself. If the word were crammed in a stream of characters "adoifen*this*adiaoe" then it would not match. Just as "\b" will match only an individual word, it's "negation"--"\B"--will match only if the set is surrounded by whole words or whitespaces. 
 
 ### Back-references "\1", "\2", "\3", etc.
+To understand the use of back-references it's important to first understand the concept of search groups. With regular expressions a search group are the search criteria defined and contained within a set of parentheses "([a-z0-9]\i)". If you have multiple sets of searches that define different criteria in each set then you can use back references to essentially repeat a search set and avoid having to write out the pattern again. For example, a set of searches such as this "([a-z]{3})([0-9]{2})([a-z]{3})" could essentially be reduced using a back-reference: "([a-z]{3})([0-9]{2})\1". This reduces the work involved in creating a search, and it reduces the clutter in the search criteria making it easier to read and understand.
 
+### Look-ahead and Look-behind "(?<=)", "(?=)"
+For some more specific, and admittedly obscure regex tools, we have the look-ahead and look-behind references. These allow the search criteria to specifically find all references of a character *only when they are preceded or followed by the character in the look-ahead/look-behind.* With a look-ahead search, "a(?=b)", the search will match on all instances of the letter "a" as long as it is followed by the character "b"; *however*, the character "b" will *not* actually be a part of the match. Likewise, with the look-behind "b(?<>=a)" will match any instances of the character "b" only when it's preceded by "a", but the "a" will *not* be a part of the match. 
 
-
-### Look-ahead and Look-behind
+The negation of the look-ahead and look-behind will do the inverse: "a(?!b)" will match on all instances of "a" only when it is *not* followed by "b"; and "a(?<!b)" will match "b" whenever it's not preceded by "a."
 
 ## Author
 
